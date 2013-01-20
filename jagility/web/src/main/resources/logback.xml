@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<jmxConfigurator contextName="jagility"/> 
+
+	<appender class="ch.qos.logback.core.ConsoleAppender" name="RootConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>[%date{yyyy-MM-dd HH:mm:ss}][%8.8thread][%-5level][%-36.36logger][%4line] - %message%n</pattern>
+		</layout>
+	</appender>
+	
+	<logger name="org.springframework" level="info"/>
+	<logger name="org.hibernate" level="info"/>
+	<logger name="net.sourceforge.stripes" level="debug"/>
+	<logger name="org.springframework.orm.hibernate3" level="debug"/>
+	<logger name="com.jagility" level="debug"/>
+	
+	<root level="warn">
+		<appender-ref ref="RootConsoleAppender"/>
+	</root>
+	
+</configuration>

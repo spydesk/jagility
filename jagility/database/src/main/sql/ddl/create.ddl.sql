@@ -1,0 +1,9 @@
+-- persons
+DROP TABLE persons IF EXISTS RESTRICT;
+CREATE TABLE persons (
+	
+	id INTEGER NOT NULL IDENTITY,
+	first_name VARCHAR NOT NULL,
+	last_name VARCHAR NOT NULL
+	
+);

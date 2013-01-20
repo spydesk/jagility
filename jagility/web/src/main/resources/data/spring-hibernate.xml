@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- DBCP Data Source                                                    -->
+    <!-- see http://commons.apache.org/dbcp/configuration.html               -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+    <bean id="dbcp-data-source" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+
+        <property name="driverClassName" value="org.hsqldb.jdbcDriver"/>
+        
+        <!--property name="connectionProperties" value=""/-->
+
+        <property name="defaultAutoCommit" value="false"/>
+
+        <property name="initialSize" value="0"/>
+        <property name="maxActive" value="40"/>
+        <property name="maxIdle" value="10"/>
+        <property name="minIdle" value="1"/>
+        <property name="maxWait" value="20000"/>
+
+        <property name="validationQuery" value="SELECT 1 FROM INFORMATION_SCHEMA.SYSTEM_SCHEMAS"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="30000"/>
+        <!--property name="numTestsPerEvictionRun" value=""/-->
+        <!--property name="minEvictableIdleTimeMillis" value=""/-->
+
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxOpenPreparedStatements" value="-1"/>
+        <!--property name="accessToUnderlyingConnectionAllowed" value=""/-->
+		
+		<property name="username" value="sa"/>
+		<property name="password" value=""/>
+		
+		<property name="url" value="jdbc:hsqldb:hsql://localhost/jagility"/>
+		
+    </bean>
+
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Hibernate Session Factory                                           -->
+    <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+	<bean id="session-factory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+
+		<property name="packagesToScan" value="com.jagility.data.entity."/>
+		
+		<property name="schemaUpdate" value="true"/>
+		
+        <property name="hibernateProperties">
+        	<value>
+				hibernate.dialect         = org.hibernate.dialect.HSQLDialect
+				hibernate.jdbc.batch_size = 30
+				hibernate.jdbc.fetch_size = 200
+				hibernate.format_sql      = true
+        	</value>
+        </property>
+		
+		<property name="dataSource" ref="dbcp-data-source"/>        
+    	<!-- could register global type definitions here -->
+
+    </bean>
+
+</beans>
